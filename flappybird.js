@@ -162,22 +162,29 @@ document.addEventListener("touchend", touchEnd);
 
 let touchY = 0; // Store the initial touch position
 
+let touchStartY = 0; // Store the initial touch position
+
+document.addEventListener("touchstart", touchStart);
+document.addEventListener("touchend", touchEnd);
+
 function touchStart(event) {
     if (gameOver) {
         return;
     }
-    touchY = event.touches[0].clientY; // Store the initial touch position
-    moveBird(); // Call the function to move the bird
+    touchStartY = event.touches[0].clientY; // Store the initial touch position
 }
 
 function touchEnd(event) {
     if (gameOver) {
         return;
     }
-    let newY = event.changedTouches[0].clientY; // Get the final touch position
-    let diffY = touchY - newY; // Calculate the difference in Y position
-    velocityY = -diffY * 0.1; // Adjust the velocity based on the touch gesture
+    let touchEndY = event.changedTouches[0].clientY; // Get the final touch position
+    let diffY = touchStartY - touchEndY; // Calculate the difference in Y position
+
+    // Adjust the bird's velocity based on the touch gesture
+    velocityY = diffY * 0.1; // Adjust the velocity based on the touch gesture sensitivity
 }
+
 
 function moveBird() {
     //jump
